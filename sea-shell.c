@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include "./include/sea-shell.h"
 
-int main()
+int main(int argc, char* argv[])
 {
-    printf("Hello World");
+	shell_loop();
+
+	return 0;
 }
