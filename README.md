@@ -1,1 +1,3 @@
-# sea-shell
+# 🐚 sea-shell
+
+Shell written in C
