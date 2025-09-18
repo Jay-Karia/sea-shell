@@ -1,0 +1,18 @@
+#ifndef SHELL_H
+#define SHELL_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define PROMPT "~> "
+
+enum {
+	input_buffer_size = 1024,
+};
+
+void shell_loop(void);
+char* read_input(void);
+int execute_command(char* input);
+
+#endif
