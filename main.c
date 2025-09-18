@@ -4,5 +4,5 @@ int main(int argc, char* argv[])
 {
 	shell_loop();
 
-	return 1;
+	return 0;
 }

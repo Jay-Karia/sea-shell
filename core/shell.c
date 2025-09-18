@@ -1,22 +1,30 @@
+// ReSharper disable CppClangTidyCertErr33C
+// ReSharper disable CppClangTidyConcurrencyMtUnsafe
+
 #include "shell.h"
 
 void shell_loop(void)
 {
-	int status = 1;
+	int status = 0;
 
-	while (status)
+	while (status == 0)
 	{
 		printf("%s", PROMPT);
-		char* input = read_input();
-		status = execute_command(input);
 
+		char* input = read_input();
+		if (input == NULL) {
+			printf("\nExiting shell...\n");
+			break;
+		}
+
+		status = execute_command(input);
 		free(input);
 	}
 }
 
 char* read_input(void)
 {
-	char* input_buffer = malloc(sizeof(char*) * input_buffer_size);
+	char* input_buffer = malloc(input_buffer_size);
 
 	if (!input_buffer)
 	{
@@ -37,7 +45,13 @@ char* read_input(void)
 		}
 	}
 
-	input_buffer[strcmp(input_buffer, "\n")] = 0;
+	// Remove trailing newline character if present
+	const size_t len = strlen(input_buffer);
+	if (len > 0 && input_buffer[len - 1] == '\n')
+	{
+		input_buffer[len - 1] = '\0';
+	}
+
 	return input_buffer;
 
 }
