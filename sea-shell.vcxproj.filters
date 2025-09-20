@@ -27,6 +27,9 @@
     <ClCompile Include="core\shell.c">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="utils\parser.c">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\shell.h">

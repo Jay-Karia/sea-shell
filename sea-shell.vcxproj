@@ -132,6 +132,7 @@
   <ItemGroup>
     <ClCompile Include="core\shell.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="utils\parser.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\shell.h" />

@@ -9,10 +9,12 @@
 
 enum {
 	input_buffer_size = 1024,
+	tokens_buffer_size = 64,
 };
 
 void shell_loop(void);
 char* read_input(void);
-int execute_command(char* input);
+int execute_command(char** args);
+char** parse_input(char* input);
 
 #endif
