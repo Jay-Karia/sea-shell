@@ -17,10 +17,6 @@ void shell_loop(void)
 		// Parse the input
 		char** args = parse_input(input);
 
-		if (args && args[0]) {
-			printf("%s\n", args[0]);
-		}
-
 		status = execute_command(args);
 
 		free(args);
@@ -30,7 +26,7 @@ void shell_loop(void)
 
 char* read_input(void)
 {
-	size_t input_buffer_size = 1024;
+	const size_t input_buffer_size = 1024;
 	char* input_buffer = malloc(input_buffer_size);
 
 	if (!input_buffer)
@@ -64,9 +60,12 @@ char* read_input(void)
 
 int execute_command(char** args)
 {
-	if (args && args[0]) {
-		printf("You entered: %s\n", args[0]);
-	} else {
+	if (args) {
+		for (int i = 0; args[i] != NULL; ++i) {
+			printf("Arg[%d]: %s\n", i, args[i]);
+		}
+	}
+	else {
 		printf("No command entered.\n");
 	}
 	return 0;
