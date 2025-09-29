@@ -1,4 +1,5 @@
 #include "shell.h"
+#include "../lib/linenoise.h"
 
 void shell_loop(void)
 {
@@ -7,11 +8,25 @@ void shell_loop(void)
 	while (status == 0)
 	{
 		printf("%s", PROMPT);
+		fflush(stdout); // Ensure prompt is displayed
 
-		char* input = read_input();
-		if (input == NULL) {
-			printf("\nExiting shell...\n");
-			break;
+		char* input = NULL;
+		size_t len = 0;
+		ssize_t read = getline(&input, &len, stdin);
+		
+		if (read == -1) {
+			if (feof(stdin)) {
+				printf("\n");
+				break; // Exit on EOF (Ctrl+Z on Windows, Ctrl+D on Unix)
+			} else {
+				perror("getline");
+				continue; // Error reading input
+			}
+		}
+
+		// Remove trailing newline if present
+		if (read > 0 && input[read - 1] == '\n') {
+			input[read - 1] = '\0';
 		}
 
 		// Parse the input
@@ -22,40 +37,6 @@ void shell_loop(void)
 		free(args);
 		free(input);
 	}
-}
-
-char* read_input(void)
-{
-	const size_t input_buffer_size = 1024;
-	char* input_buffer = malloc(input_buffer_size);
-
-	if (!input_buffer)
-	{
-		fprintf(stderr, "Allocation error\n");
-		exit(EXIT_FAILURE);
-	}
-
-	if (!fgets(input_buffer, input_buffer_size, stdin))
-	{
-		if (feof(stdin))
-		{
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			fprintf(stderr, "Input error\n");
-			exit(EXIT_FAILURE);
-		}
-	}
-
-	// Remove trailing newline character if present
-	const size_t len = strlen(input_buffer);
-	if (len > 0 && input_buffer[len - 1] == '\n')
-	{
-		input_buffer[len - 1] = '\0';
-	}
-
-	return input_buffer;
 }
 
 int execute_command(char** args)
