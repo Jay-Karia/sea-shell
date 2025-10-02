@@ -8,12 +8,16 @@ extern char current_dir[MAX_PATH];
 char *builtin_str[] = {
     "cd",
     "help",
-    "exit"};
+    "exit",
+    "ls",
+};
 
 int (*builtin_func[])(char **) = {
     &shell_cd,
     &shell_help,
-    &shell_exit};
+    &shell_exit,
+    &shell_ls,
+};
 
 int shell_num_builtins()
 {
@@ -58,4 +62,32 @@ int shell_help(char **args)
 int shell_exit(char **args)
 {
     return 1; // Return 1 to exit the shell loop
+}
+
+int shell_ls(char **args)
+{
+    WIN32_FIND_DATA findFileData;
+    HANDLE hFind;
+
+    char searchPath[MAX_PATH + 3]; // Extra space for \* and null terminator
+    snprintf(searchPath, sizeof(searchPath), "%s\\*", current_dir);
+
+    hFind = FindFirstFile(searchPath, &findFileData);
+    if (hFind == INVALID_HANDLE_VALUE)
+    {
+        printf("ls: cannot access '%s': No such file or directory\n", current_dir);
+        return 1;
+    }
+
+    do
+    {
+        const char *name = findFileData.cFileName;
+        if (strcmp(name, ".") != 0 && strcmp(name, "..") != 0)
+        {
+            printf("%s\n", name);
+        }
+    } while (FindNextFile(hFind, &findFileData) != 0);
+
+    FindClose(hFind);
+    return 0;
 }
