@@ -5,14 +5,12 @@
 char *builtin_str[] = {
     "cd",
     "help",
-    "exit"
-};
+    "exit"};
 
-int (*builtin_func[]) (char **) = {
-  &shell_cd,
-  &shell_help,
-  &shell_exit
-};
+int (*builtin_func[])(char **) = {
+    &shell_cd,
+    &shell_help,
+    &shell_exit};
 
 int shell_num_builtins()
 {
@@ -30,6 +28,10 @@ int shell_cd(char **args)
         if (SetCurrentDirectory(args[1]) == 0)
         {
             printf("cd: cannot change directory to '%s'\n", args[1]);
+        }
+        else
+        {
+            GetCurrentDirectory(MAX_PATH, current_dir);
         }
     }
     return 0;

@@ -2,15 +2,19 @@
 #include <windows.h>
 #include <process.h>
 
+char current_dir[MAX_PATH];
+
 void shell_loop(void)
 {
     char line[1024];
     char **args;
     int status = 0;
 
+    GetCurrentDirectory(MAX_PATH, current_dir);
+
     do
     {
-        printf("%s", PROMPT);
+        printf("%s%s", current_dir, PROMPT);
         fflush(stdout);
 
         if (fgets(line, sizeof(line), stdin) == NULL)
