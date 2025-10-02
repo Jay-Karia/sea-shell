@@ -11,5 +11,6 @@
 void shell_loop(void);
 int execute_command(char** args);
 char** parse_input(char* input);
+int launch_shell(char **args);
 
 #endif
