@@ -1,23 +1,19 @@
-CC = gcc
-CFLAGS = -I./include
+CC = C:/msys64/ucrt64/bin/gcc.exe
+CFLAGS = -I./include -Wall -std=c23
 TARGET = sea.exe
 OUT_DIR = bin
 
-# Build the shell
 all: $(OUT_DIR)/$(TARGET)
 
-$(OUT_DIR)/$(TARGET): main.c shell.c | $(OUT_DIR)
-	$(CC) $(CFLAGS) -o $(OUT_DIR)/$(TARGET) main.c shell.c
+$(OUT_DIR)/$(TARGET): main.c shell.c utils/execute.c utils/parser.c | $(OUT_DIR)
+	$(CC) $(CFLAGS) -o $@ main.c shell.c utils/execute.c utils/parser.c
 
 $(OUT_DIR):
-	@if not exist "$(OUT_DIR)" mkdir "$(OUT_DIR)"
+	@powershell -Command "if (!(Test-Path '$(OUT_DIR)')) { New-Item -ItemType Directory -Path '$(OUT_DIR)' }"
 
-# Clean up
 clean:
-	@if exist "$(OUT_DIR)\$(TARGET)" del /f "$(OUT_DIR)\$(TARGET)"
-	@if exist "$(OUT_DIR)" rmdir "$(OUT_DIR)"
+	@powershell -Command "if (Test-Path '$(OUT_DIR)') { Remove-Item -Recurse -Force '$(OUT_DIR)' }"
 
-# Run the program
 run: $(OUT_DIR)/$(TARGET)
 	.\$(OUT_DIR)\$(TARGET)
 

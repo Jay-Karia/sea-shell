@@ -6,11 +6,7 @@
 #include <string.h>
 
 #define PROMPT "~> "
-
-enum {
-	input_buffer_size = 1024,
-	tokens_buffer_size = 64,
-};
+#define DELIMITERS " \t\r\n\a"
 
 void shell_loop(void);
 int execute_command(char** args);
