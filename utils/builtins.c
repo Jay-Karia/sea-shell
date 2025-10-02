@@ -1,6 +1,9 @@
 #include "shell.h"
 #include <windows.h>
 
+// External reference to current_dir from shell.c
+extern char current_dir[MAX_PATH];
+
 // Define the builtin arrays here (not in the header)
 char *builtin_str[] = {
     "cd",

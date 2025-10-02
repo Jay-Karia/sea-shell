@@ -67,8 +67,7 @@ int launch_shell(char **args)
                        &si,
                        &pi))
     {
-        printf("CreateProcess failed (%ld).\n", GetLastError());
-        return 1;
+        printf("Unknown command: %s\n", args[0]);
     }
 
     // Wait until child process exits
