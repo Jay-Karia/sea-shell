@@ -5,8 +5,8 @@ OUT_DIR = bin
 
 all: $(OUT_DIR)/$(TARGET)
 
-$(OUT_DIR)/$(TARGET): main.c shell.c utils/execute.c utils/parser.c | $(OUT_DIR)
-	$(CC) $(CFLAGS) -o $@ main.c shell.c utils/execute.c utils/parser.c
+$(OUT_DIR)/$(TARGET): main.c shell.c utils/execute.c utils/parser.c utils/builtins.c | $(OUT_DIR)
+	$(CC) $(CFLAGS) -o $@ main.c shell.c utils/execute.c utils/parser.c utils/builtins.c
 
 $(OUT_DIR):
 	@powershell -Command "if (!(Test-Path '$(OUT_DIR)')) { New-Item -ItemType Directory -Path '$(OUT_DIR)' }"

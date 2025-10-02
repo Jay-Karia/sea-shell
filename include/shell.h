@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "builtins.h"
+
 #define PROMPT "~> "
 #define DELIMITERS " \t\r\n\a"
 

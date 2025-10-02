@@ -52,16 +52,16 @@ int launch_shell(char **args)
     ZeroMemory(&pi, sizeof(pi));
 
     // Start the child process
-    if (!CreateProcess(NULL,    // No module name (use command line)
-                       cmdline, // Command line
-                       NULL,    // Process handle not inheritable
-                       NULL,    // Thread handle not inheritable
-                       FALSE,   // Set handle inheritance to FALSE
-                       0,       // No creation flags
-                       NULL,    // Use parent's environment block
-                       NULL,    // Use parent's starting directory
-                       &si,     // Pointer to STARTUPINFO structure
-                       &pi))    // Pointer to PROCESS_INFORMATION structure
+    if (!CreateProcess(NULL,
+                       cmdline,
+                       NULL,
+                       NULL,
+                       FALSE,
+                       0,
+                       NULL,
+                       NULL,
+                       &si,
+                       &pi))
     {
         printf("CreateProcess failed (%ld).\n", GetLastError());
         return 1;
