@@ -1,8 +1,7 @@
 #include "shell.h"
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
-	shell_loop();
-
-	return 0;
+    shell_loop();   
+    return 0;
 }

@@ -1,34 +1,24 @@
-TARGET = shell.exe
-SRC = main.c utils/parser.c core/shell.c
-OBJDIR = obj
-OBJ = $(OBJDIR)/main.o $(OBJDIR)/parser.o $(OBJDIR)/shell.o
 CC = gcc
-CFLAGS = -I./include -Wall -Wextra -std=c99
+CFLAGS = -I./include
+TARGET = sea.exe
+OUT_DIR = bin
 
-all: $(TARGET)
+# Build the shell
+all: $(OUT_DIR)/$(TARGET)
 
-$(TARGET): $(OBJ) | create_dirs
-	$(CC) -o $@ $^ $(CFLAGS)
+$(OUT_DIR)/$(TARGET): main.c shell.c | $(OUT_DIR)
+	$(CC) $(CFLAGS) -o $(OUT_DIR)/$(TARGET) main.c shell.c
 
-$(OBJDIR)/main.o: main.c | $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
+$(OUT_DIR):
+	@if not exist "$(OUT_DIR)" mkdir "$(OUT_DIR)"
 
-$(OBJDIR)/parser.o: utils/parser.c | $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
-
-$(OBJDIR)/shell.o: core/shell.c | $(OBJDIR)
-	$(CC) -c $< -o $@ $(CFLAGS)
-
-$(OBJDIR):
-	@if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
-
-create_dirs:
-	@if not exist "$(OBJDIR)" mkdir "$(OBJDIR)"
-
+# Clean up
 clean:
-	@if exist "$(OBJDIR)" rmdir /s /q "$(OBJDIR)"
-	@if exist "$(TARGET)" del /f "$(TARGET)"
+	@if exist "$(OUT_DIR)\$(TARGET)" del /f "$(OUT_DIR)\$(TARGET)"
+	@if exist "$(OUT_DIR)" rmdir "$(OUT_DIR)"
 
-rebuild: clean all
+# Run the program
+run: $(OUT_DIR)/$(TARGET)
+	.\$(OUT_DIR)\$(TARGET)
 
-.PHONY: all clean rebuild create_dirs
+.PHONY: all clean run

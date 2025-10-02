@@ -1,3 +1,3 @@
 # 🐚 Sea Shell
 
-Shell written in C
+A simple shell written in C.

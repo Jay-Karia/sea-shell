@@ -16,9 +16,4 @@ void shell_loop(void);
 int execute_command(char** args);
 char** parse_input(char* input);
 
-// Cross-platform getline implementation
-#ifdef _WIN32
-ssize_t getline(char **lineptr, size_t *n, FILE *stream);
-#endif
-
 #endif
